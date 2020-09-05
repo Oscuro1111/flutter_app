@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './animated_balloon.dart';
+import '../crossFade.dart';
+import '../animate_opacity.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -7,11 +8,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // ignore: unused_field
   double _height = 100.0;
   double _width = 100.0;
 
-  // ignore: unused_element
   _increaseWidth() {
     setState(() {
       _width = _width >= 320.0 ? 100.0 : _width += 50.0;
@@ -54,12 +53,30 @@ class _HomeState extends State<Home> {
         ),
         body: SafeArea(
             child: SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
                 child: Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[AnimatedBallonWidget()],
+                      children: <Widget>[
+                        AnimatedContainer(
+                          alignment: Alignment.center,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.easeInOutExpo,
+                          color: Colors.amber,
+                          height: _height, //Container dimmentions
+                          width: _width,
+                          child: FlatButton(
+                            child: Text('Tab to \nGrow Width\n$_width'),
+                            onPressed: () {
+                              _increaseWidth();
+                            },
+                          ),
+                        ),
+                        Divider(),
+                        AnimatedCrossFadeWidget(),
+                        Divider(),
+                        AnimatedOpacityWidget()
+                      ],
                     )))));
   }
 }
