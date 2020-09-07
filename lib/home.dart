@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './animated_balloon.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -59,7 +58,7 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[AnimatedBallonWidget()],
+                      children: <Widget>[],
                     )))));
   }
 }
