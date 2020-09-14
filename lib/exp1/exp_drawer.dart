@@ -52,7 +52,7 @@ class _MenuListTileState extends State<MenuListTile> {
           leading: Icon(Icons.cake),
           title: Text('Birthday'),
           onTap: () {
-            Navigator.pop(context); //close opened drawer
+            //Navigator.pop(context); //close opened drawer
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => listPages[0]));
           },
@@ -79,7 +79,7 @@ class _MenuListTileState extends State<MenuListTile> {
           leading: Icon(Icons.settings),
           title: Text('Setting'),
           onTap: () {
-            Navigator.pop(context); //close  the opened drawer
+            Navigator.pop(context);
           },
         ),
       ],

@@ -7,6 +7,7 @@ class AnimatedBallonWidget extends StatefulWidget {
 
 class _AnimatedBallonWidgetState extends State<AnimatedBallonWidget>
     with TickerProviderStateMixin {
+  //implement callback which  registerd on windpws.onFrameChange make Animation controller genreate value on each frame.
   AnimationController _controllerFloatUp;
   AnimationController _controllerGrowSize;
   Animation<double> _animationFloatUp;
