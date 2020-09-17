@@ -87,7 +87,6 @@ class TaskView extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    fullscreenDialog: true,
                     builder: (context) => Description(task: taskData)));
           },
         ));
