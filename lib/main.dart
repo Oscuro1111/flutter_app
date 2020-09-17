@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import './todoApp/app.dart';
 
+//import 'home.dart';
+//size constrain fllow fromparent to child
 void main() {
   runApp(MyApp());
 }
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'OK',
+      title: 'App',
       theme: ThemeData(
         // This is the theme of your application.
         // Try running your application with "flutter run". You'll see the
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Home(),
+      home: TodoApp(),
     );
   }
 }

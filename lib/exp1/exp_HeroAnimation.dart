@@ -25,6 +25,7 @@ class About extends StatelessWidget {
 }
 
 class _HomeState extends State<Home> {
+  // ignore: unused_field
   String _howAreYou = "...";
 
   void _openPageAbout({BuildContext context, bool fullscreenDialog = false}) {

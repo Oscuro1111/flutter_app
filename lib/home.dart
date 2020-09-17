@@ -8,152 +8,56 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class Page extends StatelessWidget {
-  const Page({@required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: child,
-    );
-  }
-}
-
-const List<Widget> listPages = [
-  Page(
-      child: Center(
-    child: Icon(Icons.cake, size: 120.0, color: Colors.orange),
-  )),
-  Page(
-    child: Center(
-        child: Icon(Icons.sentiment_satisfied,
-            size: 120.0, color: Colors.lightGreen)),
+Widget item2 = InkWell(
+  child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      Icon(
+        Icons.alarm,
+        size: 40.0,
+        color: Colors.blue,
+      ),
+      Divider(),
+      Text(
+        'subtitle',
+        style: TextStyle(fontSize: 16.0),
+      ),
+    ],
   ),
-  Page(
-    child: Center(
-      child: Icon(Icons.access_alarm, size: 120.0, color: Colors.purple),
-    ),
-  )
-];
-
-class MenuListTile extends StatefulWidget {
-  @override
-  _MenuListTileState createState() => _MenuListTileState();
-}
-
-class _MenuListTileState extends State<MenuListTile> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ListTile(
-          leading: Icon(Icons.cake),
-          title: Text('Birthday'),
-          onTap: () {
-            Navigator.pop(context); //close opened drawer
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => listPages[0]));
-          },
-        ),
-        ListTile(
-            leading: Icon(Icons.sentiment_satisfied),
-            title: Text('Gratitude'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => listPages[1]));
-            }),
-        ListTile(
-          leading: Icon(Icons.alarm),
-          title: Text('Reminder'),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => listPages[2]));
-          },
-        ),
-        Divider(color: Colors.grey),
-        ListTile(
-          leading: Icon(Icons.settings),
-          title: Text('Setting'),
-          onTap: () {
-            Navigator.pop(context); //close  the opened drawer
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class LeftDrawer extends StatelessWidget {
-  const LeftDrawer({Key key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            currentAccountPicture: Icon(
-              Icons.face,
-              size: 48.0,
-              color: Colors.green,
-            ),
-            accountName: Text('Oscuro Smith'),
-            accountEmail: Text('oscurosmith@outlook.com'),
-            otherAccountsPictures: [
-              Icon(
-                Icons.bookmark_border,
-                color: Colors.green,
-              )
-            ],
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage('assets/imgs/ballon.jpg'),
-                  fit: BoxFit.cover,
-                ),
-                color: Colors.blueAccent),
-          ),
-          MenuListTile(),
-        ],
+);
+Widget item = Card(
+    //shape: StadiumBorder(),
+    elevation: 8.0, //default value is 1.0 if null
+    color: Colors.white,
+    margin: EdgeInsets.all(16.0),
+    child: ListTile(
+      leading: Icon(
+        Icons.flight,
+        size: 40.0,
+        color: Colors.blue,
       ),
-    );
-  }
-}
-
-class RightDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            padding: EdgeInsets.zero,
-            child: Icon(
-              Icons.face,
-              size: 128.0,
-              color: Colors.white54,
-            ),
-            decoration: BoxDecoration(color: Colors.blue),
-          ),
-          MenuListTile() //lists
-        ],
+      subtitle: Text(
+        'flight paid',
+        style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
       ),
-    );
-  }
-}
+      title: Text('Airoplane'),
+      trailing: Text('20%'),
+      onTap: () {},
+    ));
 
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Birthday')),
-        drawer: LeftDrawer(),
-        endDrawer: RightDrawer(),
-        body: Container());
+        appBar: AppBar(
+          title: Text('Home'),
+        ),
+        body: ListView(
+          padding: EdgeInsets.all(16.0),
+          children: [
+            item2,
+            item,
+          ],
+        ));
   }
 }
