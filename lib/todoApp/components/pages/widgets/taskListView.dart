@@ -17,7 +17,6 @@ class Description extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Task')),
       body: SingleChildScrollView(
-          child: Expanded(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -39,7 +38,7 @@ class Description extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline4)
           ],
         ),
-      )),
+      ),
     );
   }
 }
