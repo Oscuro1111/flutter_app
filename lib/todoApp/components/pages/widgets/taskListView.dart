@@ -2,8 +2,78 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../../mainState.dart';
 
+double Function(double, double) percentage =
+    (double wid, double percent) => (percent / 100) * wid;
+
+Widget priorityMeter(int priority, String child, BuildContext context) {
+  Color color;
+  double width = MediaQuery.of(context).size.width;
+
+  double boxWidth;
+
+  switch (priority) {
+    case 1:
+      color = Colors.amber;
+      boxWidth = width - percentage(width, 70);
+      break;
+    case 2:
+      color = Colors.blue;
+      boxWidth = width - percentage(width, 50);
+      break;
+    case 3:
+      color = Colors.red;
+      boxWidth = width - percentage(width, 10);
+      break;
+    default:
+      color = Colors.black;
+  }
+
+  return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+    AnimatedContainer(
+        padding: EdgeInsets.all(8.0),
+        height: percentage(MediaQuery.of(context).size.height, 10),
+        width: boxWidth,
+        color: color,
+        child: Text(
+          child,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        alignment: Alignment.center,
+        curve: Curves.bounceInOut,
+        duration: Duration(seconds: 1))
+  ]);
+}
+
+Text text2(String text) => Text(
+      text,
+      style: TextStyle(
+          fontSize: 40,
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal,
+          color: Colors.white),
+    );
+
+// ignore: non_constant_identifier_names
+Widget header_comp(String text, BuildContext context) {
+  Widget textW = text2(text);
+
+  double width = MediaQuery.of(context).size.width;
+
+  double widthPadding = width - percentage(width, 70); //30%
+
+  return Card(
+    elevation: 8.0,
+    child: Container(
+        decoration: BoxDecoration(color: Colors.blue),
+        child: Padding(
+            padding: EdgeInsets.fromLTRB(widthPadding, 5, widthPadding, 5),
+            child: textW)),
+  );
+}
+
 class Description extends StatelessWidget {
   Description({@required this.task});
+
   final Task task;
 
   final List<String> priority = [
@@ -12,29 +82,25 @@ class Description extends StatelessWidget {
     'Medium priority',
     'High priority'
   ];
+
   @override
   Widget build(BuildContext context) {
+    DateTime taskDate = task.dueDate == null ? DateTime.now() : task.dueDate;
+
     return Scaffold(
       appBar: AppBar(title: Text('Task')),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              task.task,
-              style: Theme.of(context).textTheme.headline2,
-            ),
+            header_comp(task.task, context),
             Divider(),
             Text('Priority',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
             Divider(),
-            Text(
-              '${priority[task.priority]}',
-              style: Theme.of(context).textTheme.headline3,
-            ),
+            priorityMeter(task.priority, priority[task.priority], context),
             Divider(),
-            Text(
-                'Due date:-${task.dueDate.day}/${task.dueDate.month}/${task.dueDate.year}',
+            Text('Due date:-${taskDate.day}/${taskDate.month}/${taskDate.year}',
                 style: Theme.of(context).textTheme.headline4)
           ],
         ),

@@ -5,7 +5,7 @@ import './pages/activeTask.dart';
 /*
    Navigation bar-|-active -Active task 
                   |-Dued   -passed due date
-                  |-Add    -add new task 
+                  |-Add    -add new task   
 Add-InputBox -Write task
    -priorty
    -due date
