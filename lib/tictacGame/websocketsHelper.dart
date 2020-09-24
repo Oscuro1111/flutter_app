@@ -3,7 +3,7 @@ import 'package:web_socket_channel/io.dart';
 
 WSNotifications sockets = WSNotifications();
 
-const SERVER_ADDRESS = 'ws://localhost:34263/svc/websockets';
+const SERVER_ADDRESS = 'ws://127.0.0.1:5000';
 
 class WSNotifications {
   static final WSNotifications _sockets = new WSNotifications._internel();
@@ -17,12 +17,13 @@ class WSNotifications {
 
   IOWebSocketChannel _channel;
 
-  bool _isOn;
+  bool _isOn = false;
 
   ObserverList<Function> _listeners = new ObserverList<Function>();
 
-  void initCommunication() async {
+  void initCommunication() {
     reset();
+    print("init");
     try {
       _channel = new IOWebSocketChannel.connect(SERVER_ADDRESS);
 
