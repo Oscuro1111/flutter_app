@@ -79,7 +79,7 @@ class _MainState extends State<MainState> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('To-Do'),
+          title: Text('App Sahil'),
         ),
         bottomNavigationBar: SafeArea(
           child: TabBar(

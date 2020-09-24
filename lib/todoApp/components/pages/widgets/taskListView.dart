@@ -7,6 +7,7 @@ double Function(double, double) percentage =
 
 Widget priorityMeter(int priority, String child, BuildContext context) {
   Color color;
+
   double width = MediaQuery.of(context).size.width;
 
   double boxWidth;
