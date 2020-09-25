@@ -23,10 +23,8 @@ class WSNotifications {
 
   void initCommunication() {
     reset();
-    print("init");
 
     _channel = new IOWebSocketChannel.connect(SERVER_ADDRESS);
-    print(_channel.toString());
     _channel.stream.listen(_onReceptionofMessgageFromServer);
   }
 
@@ -57,7 +55,6 @@ class WSNotifications {
 
   _onReceptionofMessgageFromServer(message) {
     _isOn = true;
-    print('responed');
     _listeners.forEach((Function callback) {
       callback(message);
     });

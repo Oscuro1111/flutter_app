@@ -35,8 +35,7 @@ class GameCommunication {
     /// JSON object
 
     Map message = json.decode(serverMessage);
-    print(message['action']);
-    print(message['data']);
+
     switch (message['action']) {
       case 'connect':
         _playerID = message['data'];
