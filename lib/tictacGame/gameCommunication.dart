@@ -8,25 +8,25 @@ import './websocketsHelper.dart';
 GameCommunication game = new GameCommunication();
 
 class GameCommunication {
-  static final GameCommunication _game = new GameCommunication._internal();
-
-  ObserverList<Function> _listener = new ObserverList<Function>();
+  ///------------------------------------------------------------
+  factory GameCommunication() {
+    return _game;
+  }
   //named empty constructor
   GameCommunication._internal() {
     sockets.initCommunication();
     sockets.addListener(_onMessageRecieved);
   }
 
-  String _playerName = "";
+  ///------------------------------------------------------------///
 
-  String _playerID = "";
+  static final GameCommunication _game = new GameCommunication._internal();
 
-  String get playerID => _playerID;
-  String get playerName => _playerName;
+  ObserverList<Function> _listener = new ObserverList<Function>();
 
-  factory GameCommunication() {
-    return _game;
-  }
+  String playerName = "";
+
+  String playerID = "";
 
   _onMessageRecieved(serverMessage) {
     ///
@@ -34,14 +34,13 @@ class GameCommunication {
     /// let's deserialize it to get the corresponding
     /// JSON object
 
-    Map message = json.decode(serverMessage);
+    Map message = json.decode(serverMessage) as Map;
 
     switch (message['action']) {
-      case 'connect':
-        _playerID = message['data'];
+      case "connect":
+        playerID = message['data'];
         break;
 
-      ///
       /// For any other incoming message, we need to
       /// dispatch it to all the listeners
 
@@ -49,12 +48,13 @@ class GameCommunication {
         _listener.forEach((Function callback) {
           callback(message);
         });
+        break;
     }
   }
 
   send(String action, String data) {
     if (action == 'join') {
-      _playerName = data;
+      playerName = data;
     }
     sockets.send(json.encode({"action": action, "data": data}));
   }

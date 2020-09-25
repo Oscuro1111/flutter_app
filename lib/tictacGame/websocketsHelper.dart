@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -21,7 +23,7 @@ class WSNotifications {
 
   ObserverList<Function> _listeners = new ObserverList<Function>();
 
-  void initCommunication() {
+  void initCommunication() async {
     reset();
 
     _channel = new IOWebSocketChannel.connect(SERVER_ADDRESS);
@@ -46,7 +48,7 @@ class WSNotifications {
   }
 
   addListener(Function callback) {
-    _listeners.remove(callback);
+    _listeners.add(callback);
   }
 
   removeListener(Function callback) {

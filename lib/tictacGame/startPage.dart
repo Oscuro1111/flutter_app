@@ -10,8 +10,7 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   static final TextEditingController _name = new TextEditingController();
 
-  String playerName;
-  List<dynamic> playersList = <dynamic>[];
+  List<dynamic> playersList = [];
 
   @override
   void initState() {
@@ -27,9 +26,13 @@ class _StartPageState extends State<StartPage> {
   }
 
   _onGameDataReceived(message) {
+    print(message['data']);
+    print(message['action']);
     switch (message['action']) {
-      case "player_list":
-        playersList = message["data"];
+      case "players_list":
+        setState(() {
+          playersList = message["data"];
+        });
         break;
       case "new_game":
         Navigator.push(
@@ -84,10 +87,16 @@ class _StartPageState extends State<StartPage> {
 
   Widget _playersList() {
     if (game.playerName == "") {
+      print('----------------');
       return Container();
     }
-
+    print('playerLIstxxxxxxxxxxxxxxxxx');
+    print(game.playerID);
+    print(game.playerName);
+    print(playersList);
     List<Widget> children = playersList.map((playerInfo) {
+      print(playerInfo);
+
       return ListTile(
         title: Text(playerInfo["name"]),
         trailing: RaisedButton(

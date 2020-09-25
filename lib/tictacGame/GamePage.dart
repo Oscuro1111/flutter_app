@@ -17,7 +17,6 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   List<String> grid = <String>["", "", "", "", "", "", "", "", ""];
-
   @override
   void initState() {
     super.initState();
