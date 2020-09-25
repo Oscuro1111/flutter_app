@@ -3,7 +3,7 @@ import 'package:web_socket_channel/io.dart';
 
 WSNotifications sockets = WSNotifications();
 
-const SERVER_ADDRESS = 'ws://127.0.0.1:5000';
+const SERVER_ADDRESS = 'wss://appserver0.herokuapp.com';
 
 class WSNotifications {
   static final WSNotifications _sockets = new WSNotifications._internel();
@@ -24,16 +24,13 @@ class WSNotifications {
   void initCommunication() {
     reset();
     print("init");
-    try {
-      _channel = new IOWebSocketChannel.connect(SERVER_ADDRESS);
 
-      _channel.stream.listen(_onReceptionofMessgageFromServer);
-    } catch (e) {
-      ///Generel error handling
-    }
+    _channel = new IOWebSocketChannel.connect(SERVER_ADDRESS);
+    print(_channel.toString());
+    _channel.stream.listen(_onReceptionofMessgageFromServer);
   }
 
-  reset() {
+  void reset() {
     if (_channel != null) {
       if (_channel.sink != null) {
         _channel.sink.close();
@@ -42,7 +39,7 @@ class WSNotifications {
     }
   }
 
-  send(String message) {
+  void send(String message) {
     if (_channel != null) {
       if (_channel.sink != null && _isOn) {
         _channel.sink.add(message);
@@ -60,6 +57,7 @@ class WSNotifications {
 
   _onReceptionofMessgageFromServer(message) {
     _isOn = true;
+    print('responed');
     _listeners.forEach((Function callback) {
       callback(message);
     });
