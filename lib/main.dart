@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './tictacGame/startPage.dart';
 
 void main() {
+  print("Start version-0.1");
   runApp(MyApp());
 }
 
@@ -11,7 +12,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'App',
-      routes: {'/': (context) => StartPage()},
       theme: ThemeData(
         // This is the theme of your application.
         // Try running your application with "flutter run". You'll see the
@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      home: StartPage(),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:web_socket_channel/io.dart';
 
 WSNotifications sockets = WSNotifications();
 
-const SERVER_ADDRESS = 'wss://appserver0.herokuapp.com';
+const SERVER_ADDRESS = 'wss://appserver0.herokuapp.com/';
 
 class WSNotifications {
   static final WSNotifications _sockets = new WSNotifications._internel();
@@ -16,7 +16,6 @@ class WSNotifications {
   }
 
   WSNotifications._internel(); //named constructor create new
-
   IOWebSocketChannel _channel;
 
   bool _isOn = false;
@@ -56,6 +55,10 @@ class WSNotifications {
   }
 
   _onReceptionofMessgageFromServer(message) {
+    print("Start reciving data........");
+    var x = json.decode(message) as Map;
+    print(x["action"]);
+    print(x["data"]);
     _isOn = true;
     _listeners.forEach((Function callback) {
       callback(message);

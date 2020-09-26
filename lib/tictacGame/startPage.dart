@@ -8,6 +8,7 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
+
   static final TextEditingController _name = new TextEditingController();
 
   List<dynamic> playersList = [];
@@ -15,7 +16,6 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
-
     game.addListener(_onGameDataReceived);
   }
 
@@ -26,8 +26,6 @@ class _StartPageState extends State<StartPage> {
   }
 
   _onGameDataReceived(message) {
-    print(message['data']);
-    print(message['action']);
     switch (message['action']) {
       case "players_list":
         setState(() {
@@ -71,7 +69,7 @@ class _StartPageState extends State<StartPage> {
             padding: const EdgeInsets.all(8.0),
             child: RaisedButton(
               onPressed: _onGameJoin,
-              child: Text("join..."),
+              child: Text("join."),
             ),
           )
         ],
@@ -87,15 +85,10 @@ class _StartPageState extends State<StartPage> {
 
   Widget _playersList() {
     if (game.playerName == "") {
-      print('----------------');
       return Container();
     }
-    print('playerLIstxxxxxxxxxxxxxxxxx');
-    print(game.playerID);
-    print(game.playerName);
-    print(playersList);
+
     List<Widget> children = playersList.map((playerInfo) {
-      print(playerInfo);
 
       return ListTile(
         title: Text(playerInfo["name"]),
@@ -132,14 +125,14 @@ class _StartPageState extends State<StartPage> {
       top: false,
       child: Scaffold(
         appBar: new AppBar(
-          title: Text('TicTacToe'),
+          title: Text('Tic-Tac-Toe'),
         ),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               _buildJoin(),
-              Text('List of players'),
+              Text('Active players now'),
               _playersList()
             ],
           ),
