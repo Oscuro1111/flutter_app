@@ -27,7 +27,9 @@ class GameCommunication {
   String playerName = "";
 
   String playerID = "";
-
+  void close(){
+    sockets.endConnection();
+  }
   _onMessageRecieved(serverMessage) {
     ///
     /// As messages are sent as a String

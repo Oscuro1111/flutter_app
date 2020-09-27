@@ -20,6 +20,12 @@ class WSNotifications {
 
   ObserverList<Function> _listeners = new ObserverList<Function>();
 
+
+  void endConnection(){
+    if(_channel!=null){
+       _channel.sink.close(100,"player left");
+    }
+  }
   void initCommunication() async {
     reset();
 

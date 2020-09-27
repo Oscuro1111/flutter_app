@@ -22,7 +22,9 @@ class _StartPageState extends State<StartPage> {
   @override
   void dispose() {
     game.removeListener(_onGameDataReceived);
+    game.close();
     super.dispose();
+
   }
 
   _onGameDataReceived(message) {
@@ -92,9 +94,16 @@ class _StartPageState extends State<StartPage> {
     }
 
     List<Widget> children = playersList.map((playerInfo) {
+
       var key = UniqueKey();
 
+      if(playerInfo["isEmpty"]==true){
+
+          return Container();
+      }
+
       if (game.playerID == playerInfo["id"]) {
+
         Widget loading = CircularProgressIndicator();
 
         return playersList.length - 1 == 0
@@ -108,12 +117,12 @@ class _StartPageState extends State<StartPage> {
       return ListTile(
         key: key,
         title: Text(playerInfo["name"]),
-        trailing: RaisedButton(
+        trailing: playerInfo["free"]?RaisedButton(
           onPressed: () {
             _onPlayGame(playerInfo["name"], playerInfo["id"]);
           },
           child: Text("Play"),
-        ),
+        ):FlatButton.icon(onPressed: (){}, icon: Icon(Icons.stop ,color: Colors.amber,), label: Text("Busy...")),
       );
     }).toList();
 
@@ -122,7 +131,7 @@ class _StartPageState extends State<StartPage> {
         ListTile(
           key: UniqueKey(),
           title: Text("XAgent Oscuro games"),
-          trailing: Icon(Icons.ac_unit),
+          trailing: CircularProgressIndicator(),
           onTap: () {},
         ),
         ...children

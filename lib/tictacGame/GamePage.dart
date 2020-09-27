@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './gameCommunication.dart';
 
@@ -6,7 +7,6 @@ class GamePage extends StatefulWidget {
     Key key,
     this.opponentName,
     this.character,
-
   }) : super(key: key);
 
   final String opponentName;
@@ -18,15 +18,14 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   List<String> grid = <String>["", "", "", "", "", "", "", "", ""];
-  bool lockMove ;
-  bool win =false;
-
+  bool lockMove;
+  bool win = false;
   @override
   void initState() {
     super.initState();
 
     game.addListener(_onAction);
-    lockMove= widget.character=="X";
+    lockMove = widget.character == "X";
   }
 
   @override
@@ -35,59 +34,55 @@ class _GamePageState extends State<GamePage> {
     super.dispose();
   }
 
+  bool winner(String chr) {
+    int flg;
+    List<List<int>> wpt = [
+      //check rows
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      //check column
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      //check diagonal
+      [2, 4, 6],
+      [0, 4, 8]
+    ];
 
-  bool winner(String chr){
-
-   int flg;
-   List<List<int>> wpt = [
-     //check rows
-     [0,1,2],
-     [3,4,5],
-     [6,7,8],
-     //check column
-     [0,3,6],
-     [1,4,7],
-     [2,5,8],
-     //check diagonal
-     [2,4,6],
-     [0,4,8]
-   ];
-
-   for(int i =0;i<wpt.length;i++){
+    for (int i = 0; i < wpt.length; i++) {
       flg = 0;
-     for(int j=0;j<wpt[i].length;j++){
-        if(chr==grid[wpt[i][j]]){
-             flg+=1;
-        }else {
+      for (int j = 0; j < wpt[i].length; j++) {
+        if (chr == grid[wpt[i][j]]) {
+          flg += 1;
+        } else {
           --flg;
         }
-     }
+      }
 
-     if(flg==3){
-       print('flg value:$flg');
+      if (flg == 3) {
+        print('flg value:$flg');
         return true;
-     }
-   }
+      }
+    }
 
-   return false;
-
+    return false;
   }
 
   _onAction(message) {
+    bool flg = false;
+
     switch (message["action"]) {
       case 'resigned':
         Navigator.of(context).pop();
         break;
       case 'play':
-
         var data = (message["data"] as String).split(';');
         grid[int.parse(data[0])] = data[1];
 
-        if(winner("X")||winner("O")){
-          _doResign();
+        if (winner("X")||winner("O")) {
+           _doResign();
         }
-
-
         lockMove = !lockMove;
 
         setState(() {
@@ -127,12 +122,12 @@ class _GamePageState extends State<GamePage> {
       top: false,
       bottom: false,
       child: GridView.builder(
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-          itemCount: 9,
-          itemBuilder: (BuildContext context, int index) {
-            return _gridItem(index);
-          }),
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+              itemCount: 9,
+              itemBuilder: (BuildContext context, int index) {
+                return _gridItem(index);
+              }),
     );
   }
 
@@ -140,8 +135,7 @@ class _GamePageState extends State<GamePage> {
     Color color = grid[index] == "X" ? Colors.blue : Colors.red;
     return InkWell(
       onTap: () {
-
-        if (grid[index] == ""&&lockMove) {
+        if (grid[index] == "" && lockMove) {
           lockMove = false;
           grid[index] = widget.character;
           game.send('play', '$index;${widget.character}');
