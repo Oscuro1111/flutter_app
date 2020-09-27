@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/tictacGame/GamePage.dart';
 
@@ -8,9 +9,8 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
-
   static final TextEditingController _name = new TextEditingController();
-
+  bool loackMove = false;
   List<dynamic> playersList = [];
 
   @override
@@ -38,7 +38,7 @@ class _StartPageState extends State<StartPage> {
             new MaterialPageRoute(
                 builder: (BuildContext context) => GamePage(
                       opponentName: message["data"],
-                      character: 'o',
+                      character: 'O',
                     )));
         break;
     }
@@ -54,6 +54,7 @@ class _StartPageState extends State<StartPage> {
       child: Column(
         children: <Widget>[
           TextField(
+            key: UniqueKey(),
             controller: _name,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
@@ -85,12 +86,27 @@ class _StartPageState extends State<StartPage> {
 
   Widget _playersList() {
     if (game.playerName == "") {
-      return Container();
+      return Container(
+        child: Text(''),
+      );
     }
 
     List<Widget> children = playersList.map((playerInfo) {
+      var key = UniqueKey();
+
+      if (game.playerID == playerInfo["id"]) {
+        Widget loading = CircularProgressIndicator();
+
+        return playersList.length - 1 == 0
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[loading],
+              )
+            : Container();
+      }
 
       return ListTile(
+        key: key,
         title: Text(playerInfo["name"]),
         trailing: RaisedButton(
           onPressed: () {
@@ -102,13 +118,22 @@ class _StartPageState extends State<StartPage> {
     }).toList();
 
     return Column(
-      children: children,
+      children: <Widget>[
+        ListTile(
+          key: UniqueKey(),
+          title: Text("XAgent Oscuro games"),
+          trailing: Icon(Icons.ac_unit),
+          onTap: () {},
+        ),
+        ...children
+      ],
     );
   }
 
   _onPlayGame(String opponentName, String opponentId) {
     game.send('new_game', opponentId);
 
+    //Bug
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -132,7 +157,7 @@ class _StartPageState extends State<StartPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               _buildJoin(),
-              Text('Active players now'),
+              Text('Active players'),
               _playersList()
             ],
           ),

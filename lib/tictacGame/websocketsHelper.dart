@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
-import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 WSNotifications sockets = WSNotifications();
 
-const SERVER_ADDRESS = 'wss://appserver0.herokuapp.com/';
+const SERVER_ADDRESS = 'wss://appserver0.herokuapp.com';
 
 class WSNotifications {
   static final WSNotifications _sockets = new WSNotifications._internel();
@@ -16,7 +14,7 @@ class WSNotifications {
   }
 
   WSNotifications._internel(); //named constructor create new
-  IOWebSocketChannel _channel;
+  WebSocketChannel _channel;
 
   bool _isOn = false;
 
@@ -25,7 +23,7 @@ class WSNotifications {
   void initCommunication() async {
     reset();
 
-    _channel = new IOWebSocketChannel.connect(SERVER_ADDRESS);
+    _channel = new WebSocketChannel.connect(Uri.parse(SERVER_ADDRESS));
     _channel.stream.listen(_onReceptionofMessgageFromServer);
   }
 
@@ -55,10 +53,6 @@ class WSNotifications {
   }
 
   _onReceptionofMessgageFromServer(message) {
-    print("Start reciving data........");
-    var x = json.decode(message) as Map;
-    print(x["action"]);
-    print(x["data"]);
     _isOn = true;
     _listeners.forEach((Function callback) {
       callback(message);
