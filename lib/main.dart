@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import './tictacGame/startPage.dart';
+import 'package:flutter_app/layout/gridview.dart';
+
+// import './tictacGame/startPage.dart';
+
 //import './tictacGame//test.dart';
 
 void main() {
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: StartPage(),
+      home: GridViewLayoutM(),
     );
   }
 }

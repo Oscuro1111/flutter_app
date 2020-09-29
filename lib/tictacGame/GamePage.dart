@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './gameCommunication.dart';
 
+
+
 class GamePage extends StatefulWidget {
   GamePage({
     Key key,
@@ -70,8 +72,6 @@ class _GamePageState extends State<GamePage> {
   }
 
   _onAction(message) {
-    bool flg = false;
-
     switch (message["action"]) {
       case 'resigned':
         Navigator.of(context).pop();
@@ -80,8 +80,8 @@ class _GamePageState extends State<GamePage> {
         var data = (message["data"] as String).split(';');
         grid[int.parse(data[0])] = data[1];
 
-        if (winner("X")||winner("O")) {
-           _doResign();
+        if (winner("X") || winner("O")) {
+          _doResign();
         }
         lockMove = !lockMove;
 
@@ -122,12 +122,12 @@ class _GamePageState extends State<GamePage> {
       top: false,
       bottom: false,
       child: GridView.builder(
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-              itemCount: 9,
-              itemBuilder: (BuildContext context, int index) {
-                return _gridItem(index);
-              }),
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+          itemCount: 9,
+          itemBuilder: (BuildContext context, int index) {
+            return _gridItem(index);
+          }),
     );
   }
 

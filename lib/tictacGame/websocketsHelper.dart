@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/io.dart';
 
 WSNotifications sockets = WSNotifications();
 
@@ -14,22 +14,22 @@ class WSNotifications {
   }
 
   WSNotifications._internel(); //named constructor create new
-  WebSocketChannel _channel;
+  IOWebSocketChannel _channel;
 
   bool _isOn = false;
 
   ObserverList<Function> _listeners = new ObserverList<Function>();
 
-
-  void endConnection(){
-    if(_channel!=null){
-       _channel.sink.close(100,"player left");
+  void endConnection() {
+    if (_channel != null) {
+      _channel.sink.close(100, "player left");
     }
   }
+
   void initCommunication() async {
     reset();
 
-    _channel = new WebSocketChannel.connect(Uri.parse(SERVER_ADDRESS));
+    _channel = new IOWebSocketChannel.connect(Uri.parse(SERVER_ADDRESS));
     _channel.stream.listen(_onReceptionofMessgageFromServer);
   }
 
